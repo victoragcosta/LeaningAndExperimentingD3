@@ -1,27 +1,35 @@
-function generateRandomData() {
+let formatter = d3.format(">02~");
+
+function generateRandomData(min = 0, max = 20, size = null) {
   let arr = [];
-  let formatter = d3.format(">02~");
-  let newNum = () => formatter(Math.floor(Math.random() * 20));
-  for (let i = 0; i < 5 + Math.random() * 15; i++) {
+  let newNum = () => min + Math.floor(Math.random() * (max - min));
+  if (!size) size = 5 + Math.random() * 15;
+  for (let i = 0; i < size; i++) {
     let num = newNum();
-    while (arr.includes(formatter(num))) {
+    while (arr.map((e) => e.value).includes(num)) {
       num = newNum();
     }
-    arr.push(num);
+    arr.push({ value: num, color: "black" });
   }
   return arr;
 }
 
-class Chart {
-  constructor() {
-    let div = d3.select("#chart");
+function delay(ms) {
+  return new Promise((resolve) => setInterval(resolve, ms));
+}
+
+class ArrayDisplay {
+  constructor(selector) {
+    this._data = [];
+
+    let div = d3.select(selector);
 
     let width = div.node().getBoundingClientRect().width;
     let margin = {
       top: 0,
       bottom: 0,
       left: 20,
-      right: 5
+      right: 5,
     };
     this.svg = div.append("svg");
     this.chart = this.svg
@@ -34,46 +42,54 @@ class Chart {
       .attr("transform", `translate(${margin.left},${margin.top})`);
   }
 
-  setData(data) {
-    const t = this.svg.transition().duration(1000);
+  get data() {
+    return this._data;
+  }
+
+  set data(newData) {
+    this._data = newData;
+
+    const t = this.svg.transition().duration(500);
     const distance = 35;
-    const yPos = 17,
-      yExit = 26;
+    const yPos = 17;
+    const yExit = 26;
 
     let text = this.chart.selectAll("text");
 
     text = text
-      .data(data, d => d)
+      .data(newData, (d) => d.value)
       .join(
-        enter =>
+        (enter) =>
           enter
             .append("text")
-            .attr("y", yPos - yExit)
             .attr("x", (d, i) => i * distance)
+            .attr("y", yPos - yExit)
             .attr("dy", "0.35em")
             .style("text-anchor", "middle")
             .style("fill", "green")
-            .text(d => d)
-            .call(text =>
+            .style("font-weight", "700")
+            .text((d) => formatter(d.value))
+            .call((text) =>
               text
                 .transition(t)
-                .delay(750)
+                .delay(200)
                 .ease(d3.easeBounceOut)
                 .attr("y", yPos)
                 .transition()
-                .duration(300)
-                .ease(d3.easeExpIn)
-                .style("fill", "black")
+                .duration(100)
+                .ease(d3.easeLinear)
+                .style("fill", (d) => d.color)
             ),
-        update =>
-          update.call(text =>
+        (update) =>
+          update.call((text) =>
             text
               .transition(t)
               .ease(d3.easeExp)
               .attr("x", (d, i) => i * distance)
+              .style("fill", (d) => d.color)
           ),
-        exit =>
-          exit.style("fill", "red").call(text =>
+        (exit) =>
+          exit.style("fill", "red").call((text) =>
             text
               .transition(t)
               .ease(d3.easeExpOut)
@@ -84,9 +100,52 @@ class Chart {
   }
 }
 
-let chart = new Chart();
-chart.setData(generateRandomData());
+let randomNumbers = new ArrayDisplay("#number-display");
+randomNumbers.data = generateRandomData();
 setInterval(() => {
-  let data = generateRandomData();
-  chart.setData(data);
-}, 5000);
+  randomNumbers.data = generateRandomData();
+}, 2500);
+
+let bubbleSort = new ArrayDisplay("#bubble-sort-display");
+async function bubbleSorting(arr, selectedColor = "red", baseColor = "black") {
+  let items = arr.slice();
+  bubbleSort.data = items;
+  await delay(800);
+  for (let i = 0; i < items.length; i++) {
+    for (let j = 0; j < items.length - 1 - i; j++) {
+      items[j].color = selectedColor;
+      items[j + 1].color = selectedColor;
+      bubbleSort.data = items;
+      await delay(800);
+
+      if (items[j].value > items[j + 1].value) {
+        let t = items[j];
+        items[j] = items[j + 1];
+        items[j + 1] = t;
+        bubbleSort.data = items;
+        await delay(800);
+      }
+
+      items[j].color = baseColor;
+      items[j + 1].color = baseColor;
+      bubbleSort.data = items;
+      await delay(800);
+    }
+  }
+}
+
+let bubbleSortBlocked = false;
+async function showBubbleSort() {
+  if (!bubbleSortBlocked) {
+    bubbleSortBlocked = true;
+    d3.select('button[onclick="showBubbleSort()"]').node().disabled = true;
+    this.disabled = true;
+    await bubbleSorting(
+      d3.shuffle(d3.range(1, 16)).map((e) => {
+        return { value: e, color: "black" };
+      })
+    );
+    bubbleSortBlocked = false;
+    d3.select('button[onclick="showBubbleSort()"]').node().disabled = false;
+  }
+}
