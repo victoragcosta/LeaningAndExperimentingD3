@@ -1,27 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>D3 Playground</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>D3 Experiments</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <!-- Load site CSS -->
     <link rel="stylesheet" href="css/site.css" />
   </head>
-  <body>
-    <div class="container">
-      <div class="flexy"></div>
-      <div class="flexy important">
-        <h1>D3 Playground</h1>
-
-        <h2>Random Number Display</h2>
-        <div id="number-display"></div>
-
-        <h2>Bubble Sort Example</h2>
-        <button onclick="showBubbleSort()">Play</button>
-        <div id="bubble-sort-display"></div>
+  <body
+    class="bg-light"
+    data-spy="scroll"
+    data-target=".navbar"
+    data-offset="20"
+  >
+    <!-- <div class="container-fluid bg-primary">
+      <h1 class="display-1 text-center text-white mb-0 pb-2">
+        Playing with D3
+      </h1>
+    </div> -->
+    <nav
+      class="navbar navbar-expand-md bg-primary navbar-dark sticky-top shadow"
+    >
+      <div class="container-md">
+        <a href="#home" class="navbar-brand">D3 Experiments</a>
+        <button
+          class="navbar-toggler ml-auto"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsible-navbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsible-navbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a href="#home" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="#random-numbers" class="nav-link">Random Numbers</a>
+            </li>
+            <li class="nav-item">
+              <a href="#bubble-sort" class="nav-link">Bubble Sort</a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="flexy"></div>
+    </nav>
+
+    <div class="container-md pt-3 px-md-5 px-sm-4 border bg-white">
+      <h1 id="home" class="display-1 text-center">D3 Experiments</h1>
+      <br />
+
+      <!-- <div class="card bg-light">
+        <div class="card-body">
+          <h4 class="card-title">20 numbers</h4>
+          <div id="num20-display"></div>
+        </div>
+      </div>
+      <br /> -->
+
+      <div class="card bg-light">
+        <div class="card-body">
+          <h4 id="random-numbers" class="card-title">Random Numbers Display</h4>
+          <div id="random-numbers-display"></div>
+        </div>
+      </div>
+      <br />
+
+      <div class="card bg-light">
+        <span class="anchor-offset"></span>
+        <div class="card-body">
+          <h4 id="bubble-sort" class="card-title">
+            Bubble Sort Example
+            <span class="badge badge-primary" onclick="showBubbleSort()"
+              >Play</span
+            >
+          </h4>
+          <div id="bubble-sort-display"></div>
+        </div>
+      </div>
+      <br />
     </div>
 
     <!-- Load D3 -->

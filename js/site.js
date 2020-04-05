@@ -1,3 +1,4 @@
+// Auxiliary functions
 let formatter = d3.format(">02~");
 
 function generateRandomData(min = 0, max = 20, size = null) {
@@ -17,7 +18,9 @@ function generateRandomData(min = 0, max = 20, size = null) {
 function delay(ms) {
   return new Promise((resolve) => setInterval(resolve, ms));
 }
+// /Auxiliary functions
 
+// D3 Array text displayer
 class ArrayDisplay {
   constructor(selector) {
     this._data = [];
@@ -25,18 +28,21 @@ class ArrayDisplay {
     let div = d3.select(selector);
 
     let width = div.node().getBoundingClientRect().width;
+    let height = 33;
+    let fontsize = d3.min([20, width * 0.03]);
+    this.distance = d3.min([35, fontsize * 1.6]);
     let margin = {
       top: 0,
       bottom: 0,
-      left: 20,
-      right: 5,
+      left: this.distance * 0.8,
+      right: this.distance * 0.8,
     };
     this.svg = div.append("svg");
     this.chart = this.svg
       .attr("width", width)
-      .attr("height", 33)
+      .attr("height", height)
       .attr("font-family", "sans-serif")
-      .attr("font-size", 20)
+      .attr("font-size", fontsize)
       .style("display", "block")
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -50,7 +56,6 @@ class ArrayDisplay {
     this._data = newData;
 
     const t = this.svg.transition().duration(500);
-    const distance = 35;
     const yPos = 17;
     const yExit = 26;
 
@@ -62,7 +67,7 @@ class ArrayDisplay {
         (enter) =>
           enter
             .append("text")
-            .attr("x", (d, i) => i * distance)
+            .attr("x", (d, i) => i * this.distance)
             .attr("y", yPos - yExit)
             .attr("dy", "0.35em")
             .style("text-anchor", "middle")
@@ -85,7 +90,7 @@ class ArrayDisplay {
             text
               .transition(t)
               .ease(d3.easeExp)
-              .attr("x", (d, i) => i * distance)
+              .attr("x", (d, i) => i * this.distance)
               .style("fill", (d) => d.color)
           ),
         (exit) =>
@@ -99,14 +104,22 @@ class ArrayDisplay {
       );
   }
 }
+// D3 Array text displayer
 
-let randomNumbers = new ArrayDisplay("#number-display");
+// Random numbers demonstration
+let randomNumbers = new ArrayDisplay("#random-numbers-display");
 randomNumbers.data = generateRandomData();
 setInterval(() => {
   randomNumbers.data = generateRandomData();
 }, 2500);
+// Random numbers demonstration
 
+// Bubble Sort demosntration
 let bubbleSort = new ArrayDisplay("#bubble-sort-display");
+bubbleSort.data = d3.range(15).map((e) => {
+  return { value: e, color: "black" };
+});
+
 async function bubbleSorting(arr, selectedColor = "red", baseColor = "black") {
   let items = arr.slice();
   bubbleSort.data = items;
@@ -133,12 +146,11 @@ async function bubbleSorting(arr, selectedColor = "red", baseColor = "black") {
     }
   }
 }
-
 let bubbleSortBlocked = false;
 async function showBubbleSort() {
   if (!bubbleSortBlocked) {
     bubbleSortBlocked = true;
-    d3.select('button[onclick="showBubbleSort()"]').node().disabled = true;
+    d3.select('*[onclick="showBubbleSort()"]').node().disabled = true;
     this.disabled = true;
     await bubbleSorting(
       d3.shuffle(d3.range(1, 16)).map((e) => {
@@ -149,3 +161,28 @@ async function showBubbleSort() {
     d3.select('button[onclick="showBubbleSort()"]').node().disabled = false;
   }
 }
+// /Bubble Sort demonstration
+
+// Show 25 numbers
+if (d3.select("#num20-display").node()) {
+  let d25numbers = new ArrayDisplay("#num20-display");
+  d25numbers.data = d3.range(20).map((e) => {
+    return { value: e, color: "black" };
+  });
+}
+// /Show 25 numbers
+
+// Deal with resizing of the screen
+let resizer = () => {
+  let width = $(window).width();
+  if (width < 400) {
+    $("#home").addClass("display-4").removeClass("display-1 display-3");
+  } else if (width < 576) {
+    $("#home").addClass("display-3").removeClass("display-1 display-4");
+  } else {
+    $("#home").addClass("display-1").removeClass("display-3 display-4");
+  }
+};
+$(window).resize(resizer);
+$(document).ready(resizer);
+// /Deal with resizing of the screen

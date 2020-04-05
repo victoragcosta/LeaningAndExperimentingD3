@@ -1,37 +1,20 @@
 body {
-  height: 100vh;
-  overflow: hidden;
-  background-color: rgb(240, 240, 240);
-  margin: 0;
-}
-
-.container {
-  height: 100%;
-  width: 80%;
-  margin: 0 auto;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-}
-
-.flexy {
-  flex: 1;
-}
-
-.flexy.important {
-  flex: 4;
-}
-
-.container h1 {
-  width: fit-content;
-  margin: 0 auto;
-}
-
-.container > div {
-  width: 80%;
-  margin: 0 auto;
+  position: relative;
 }
 
 svg {
   margin: 0 auto;
+}
+
+*[onclick="showBubbleSort()"] {
+  cursor: pointer;
+}
+
+h4::before,
+#home::before {
+  content: "";
+  display: block;
+  height: 90px;
+  margin-top: -90px;
+  visibility: hidden;
 }
