@@ -10,6 +10,10 @@ svg {
   cursor: pointer;
 }
 
+*[onclick="showBubbleSort()"]:disabled {
+  cursor: not-allowed;
+}
+
 h4::before,
 #home::before {
   content: "";
