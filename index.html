@@ -85,10 +85,24 @@
         <div class="card-body">
           <h4 id="bubble-sort" class="card-title">
             Bubble Sort Example
-            <span class="badge badge-primary" onclick="showBubbleSort()"
-              >Play</span
-            >
           </h4>
+          <div class="w-100">
+            <button class="btn btn-primary" onclick="showBubbleSort()">
+              Play
+            </button>
+            <span id="bubble-sort-amount-display" class="mx-2">15</span>
+            <input
+              type="range"
+              class="custom-range w-sm-50 w-xl-25"
+              id="bubble-sort-amount"
+              name="amount"
+              max="20"
+              min="2"
+              value="15"
+              data-toggle="range"
+              data-target="#bubble-sort-amount-display"
+            />
+          </div>
           <div id="bubble-sort-display"></div>
         </div>
       </div>

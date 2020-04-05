@@ -116,61 +116,100 @@ setInterval(() => {
 
 // Bubble Sort demosntration
 let bubbleSort = new ArrayDisplay("#bubble-sort-display");
-bubbleSort.data = d3.range(15).map((e) => {
+bubbleSort.data = d3.range(1, 16).map((e) => {
   return { value: e, color: "black" };
 });
 
-async function bubbleSorting(arr, selectedColor = "red", baseColor = "black") {
+async function bubbleSorting(
+  arr,
+  selectedColor = "red",
+  baseColor = "black",
+  doneColor = "green"
+) {
+  // Copy the input array into a new array
   let items = arr.slice();
+
+  // Update the chart with initial state and wait for the animation
   bubbleSort.data = items;
   await delay(800);
+
+  // Bubblesort simple algorithm
   for (let i = 0; i < items.length; i++) {
     for (let j = 0; j < items.length - 1 - i; j++) {
+      // Show which elements the algorithm is analyzing
       items[j].color = selectedColor;
       items[j + 1].color = selectedColor;
       bubbleSort.data = items;
       await delay(800);
 
+      // If out of order, change order
       if (items[j].value > items[j + 1].value) {
         let t = items[j];
         items[j] = items[j + 1];
         items[j + 1] = t;
+        // Show change of order
         bubbleSort.data = items;
         await delay(800);
       }
 
+      // Change back to original color
       items[j].color = baseColor;
       items[j + 1].color = baseColor;
       bubbleSort.data = items;
       await delay(800);
     }
   }
+
+  // Array is now in order, color it green
+  bubbleSort.data = items.map((e) => {
+    return { value: e.value, color: doneColor };
+  });
 }
 let bubbleSortBlocked = false;
 async function showBubbleSort() {
+  // Guarantees that it is not running
   if (!bubbleSortBlocked) {
-    bubbleSortBlocked = true;
+    // Disables button for visual information
     d3.select('*[onclick="showBubbleSort()"]').node().disabled = true;
-    this.disabled = true;
-    await bubbleSorting(
-      d3.shuffle(d3.range(1, 16)).map((e) => {
-        return { value: e, color: "black" };
-      })
-    );
+    // Blocks running
+    bubbleSortBlocked = true;
+
+    // Get number of elements
+    let quantity = +d3.select("#bubble-sort-amount").node().value;
+    // Create array to order
+    let arr = d3.shuffle(d3.range(1, quantity + 1)).map((e) => {
+      return { value: e, color: "black" };
+    });
+
+    // Waits for the completion of the sort
+    await bubbleSorting(arr);
+
+    // Enables running again
     bubbleSortBlocked = false;
+    // Allows button clicking and show that it can run again
     d3.select('button[onclick="showBubbleSort()"]').node().disabled = false;
   }
 }
+
+if ($("#bubble-sort-amount")[0]) {
+  $("#bubble-sort-amount").on("change", function () {
+    let quantity = +$(this).prop("value");
+    bubbleSort.data = d3.range(1, quantity + 1).map((e) => {
+      return { value: e, color: "black" };
+    });
+  });
+}
+
 // /Bubble Sort demonstration
 
-// Show 25 numbers
+// Show 20 numbers
 if (d3.select("#num20-display").node()) {
   let d25numbers = new ArrayDisplay("#num20-display");
   d25numbers.data = d3.range(20).map((e) => {
     return { value: e, color: "black" };
   });
 }
-// /Show 25 numbers
+// /Show 20 numbers
 
 // Deal with resizing of the screen
 let resizer = () => {
@@ -186,3 +225,15 @@ let resizer = () => {
 $(window).resize(resizer);
 $(document).ready(resizer);
 // /Deal with resizing of the screen
+
+// Deal with ranges
+if ($('input[data-toggle="range"]')[0]) {
+  $('input[data-toggle="range"]').on("input", function () {
+    let self = $(this);
+    let target = $(self.attr("data-target"));
+    if (target[0]) {
+      target.text(self.prop("value"));
+    }
+  });
+}
+// /Deal with ranges
