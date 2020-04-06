@@ -55,6 +55,9 @@
             <li class="nav-item">
               <a href="#bubble-sort" class="nav-link">Bubble Sort</a>
             </li>
+            <li class="nav-item">
+              <a href="#bubble-sort-2" class="nav-link">Bubble Sort 2</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -87,7 +90,7 @@
             Bubble Sort Example
           </h4>
           <div class="w-100">
-            <button class="btn btn-primary" onclick="showBubbleSort()">
+            <button class="btn btn-primary" id="bubble-sort-play">
               Play
             </button>
             <span id="bubble-sort-amount-display" class="mx-2">15</span>
@@ -107,10 +110,43 @@
         </div>
       </div>
       <br />
+
+      <div class="card bg-light">
+        <span class="anchor-offset"></span>
+        <div class="card-body">
+          <h4 id="bubble-sort-2" class="card-title">
+            Bubble Sort Example 2
+          </h4>
+          <div class="w-100">
+            <button class="btn btn-primary" id="bubble-sort-2-play">
+              Play
+            </button>
+            <span id="bubble-sort-2-amount-display" class="mx-2">15</span>
+            <input
+              type="range"
+              class="custom-range w-sm-50 w-xl-25"
+              id="bubble-sort-2-amount"
+              name="amount"
+              max="20"
+              min="2"
+              value="15"
+              data-toggle="range"
+              data-target="#bubble-sort-2-amount-display"
+            />
+          </div>
+          <div id="bubble-sort-2-display"></div>
+        </div>
+      </div>
+      <br />
     </div>
 
     <!-- Load D3 -->
     <script src="libs/d3/d3.min.js" charset="utf-8"></script>
+
+    <!-- Load D3 displays -->
+    <script src="js/BarDisplay.js"></script>
+    <script src="js/ArrayDisplay.js"></script>
+    <script src="js/chart_loader.js"></script>
 
     <!-- Load site JS -->
     <script src="js/site.js"></script>
