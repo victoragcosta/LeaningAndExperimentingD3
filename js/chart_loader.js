@@ -100,9 +100,16 @@ async function showBubbleSort(
 
 // Random numbers demonstration
 let randomNumbers = new ArrayDisplay("#random-numbers-display");
+let randomNumbers2 = new BarDisplay("#random-numbers-2-display");
 randomNumbers.data = generateRandomData();
+randomNumbers2.data = generateRandomData().map((e) => {
+  return { value: e.value, color: null };
+});
 setInterval(() => {
   randomNumbers.data = generateRandomData();
+  randomNumbers2.data = randomNumbers.data.map((e) => {
+    return { value: e.value, color: null };
+  });
 }, 2500);
 // Random numbers demonstration
 
@@ -151,7 +158,7 @@ if ($("#bubble-sort-2-play")[0]) {
       "#bubble-sort-2-play",
       bubbleSort2Environment,
       d3.shuffle(bubbleSort2.data),
-      "red",
+      d3.interpolateReds,
       null,
       null
     );

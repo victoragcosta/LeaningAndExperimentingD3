@@ -18,6 +18,8 @@ class BarDisplay {
       right: 30,
     };
     this.svg = div.append("svg");
+    this.svgDefs = this.svg.append("defs");
+
     this.chart = this.svg
       .attr("width", width)
       .attr("height", height)
@@ -67,7 +69,17 @@ class BarDisplay {
     const y = this.y;
     const color = this.color;
 
+    const svgDefs = this.svgDefs;
     const t = this.svg.transition().duration(266);
+
+    let colorFunc = (d) => {
+      if (d.color === null) {
+        return color(d.value);
+      } else if (typeof d.color === "function") {
+        return d3.scaleSequential(d.color).domain(colorDomain)(d.value);
+      }
+      return d.color;
+    };
 
     this.chart
       .selectAll("rect")
@@ -88,12 +100,7 @@ class BarDisplay {
                 .delay(550)
                 .attr("y", (d) => y(yDomain[1]) - y(d.value))
                 .attr("height", (d) => y(d.value))
-                .style("fill", (d) => {
-                  if (d.color !== null) {
-                    return d.color;
-                  }
-                  return color(d.value);
-                })
+                .style("fill", colorFunc)
             ),
         (update) =>
           update.call((rect) =>
@@ -104,12 +111,7 @@ class BarDisplay {
               .attr("y", (d) => y(yDomain[1]) - y(d.value))
               .attr("width", x.bandwidth())
               .attr("height", (d) => y(d.value))
-              .style("fill", (d) => {
-                if (d.color !== null) {
-                  return d.color;
-                }
-                return color(d.value);
-              })
+              .style("fill", colorFunc)
           ),
         (exit) =>
           exit.call((rect) =>
