@@ -110,7 +110,7 @@ setInterval(() => {
   randomNumbers2.data = randomNumbers.data.map((e) => {
     return { value: e.value, color: null };
   });
-}, 2500);
+}, 2000);
 // Random numbers demonstration
 
 // Bubble Sort demonstration
@@ -160,7 +160,7 @@ if ($("#bubble-sort-2-play")[0]) {
       d3.shuffle(bubbleSort2.data),
       d3.interpolateReds,
       null,
-      null
+      d3.interpolateGreens
     );
   });
 }

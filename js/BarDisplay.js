@@ -4,7 +4,7 @@ class BarDisplay {
    *
    * @param {string} selector A CSS like selector representing the element to put the graph inside
    */
-  constructor(selector) {
+  constructor(selector, colorInterpolator = d3.interpolateBlues) {
     this._data = [];
 
     let div = d3.select(selector);
@@ -33,7 +33,7 @@ class BarDisplay {
     this.y = d3
       .scaleLinear()
       .rangeRound([0, height - margin.top - margin.bottom]);
-    this.color = d3.scaleSequential(d3.interpolateBlues);
+    this.color = d3.scaleSequential(colorInterpolator);
 
     this.xAxis = this.svg
       .append("g")
@@ -70,7 +70,8 @@ class BarDisplay {
     const color = this.color;
 
     const svgDefs = this.svgDefs;
-    const t = this.svg.transition().duration(266);
+    const transitionTime = 400;
+    const t = this.svg.transition().duration(transitionTime);
 
     let colorFunc = (d) => {
       if (d.color === null) {
@@ -97,7 +98,8 @@ class BarDisplay {
             .call((rect) =>
               rect
                 .transition(t)
-                .delay(550)
+                .ease(d3.easeExpOut)
+                .delay(transitionTime * 2)
                 .attr("y", (d) => y(yDomain[1]) - y(d.value))
                 .attr("height", (d) => y(d.value))
                 .style("fill", colorFunc)
@@ -106,7 +108,8 @@ class BarDisplay {
           update.call((rect) =>
             rect
               .transition(t)
-              .delay(250)
+              .ease(d3.easeBack)
+              .delay(transitionTime)
               .attr("x", (d) => x(d.value))
               .attr("y", (d) => y(yDomain[1]) - y(d.value))
               .attr("width", x.bandwidth())
@@ -117,16 +120,21 @@ class BarDisplay {
           exit.call((rect) =>
             rect
               .transition(t)
+              .ease(d3.easeExpIn)
               .attr("y", y(yDomain[1]))
               .attr("height", y(0))
               .style("fill", color(0))
               .remove()
           )
       );
-    this.xAxis.transition(t).delay(250).call(d3.axisBottom(x));
+    this.xAxis
+      .transition(t)
+      .ease(d3.easeBack)
+      .delay(transitionTime)
+      .call(d3.axisBottom(x));
     this.yAxis
       .transition(t)
-      .delay(250)
+      .delay(transitionTime)
       .call(d3.axisLeft(y).ticks(d3.min([yDomain[1], 20])))
       .selectAll("text")
       .attr("x", 8)
