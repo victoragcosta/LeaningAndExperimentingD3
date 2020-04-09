@@ -2,6 +2,8 @@ class BarDisplay {
   /**
    * Creates an instance of BarDisplay and creates an svg for the graph
    *
+   * @constructor
+   * @author victoragcosta
    * @param {string} selector A CSS like selector representing the element to put the graph inside
    */
   constructor(selector, colorInterpolator = d3.interpolateBlues) {
@@ -32,6 +34,7 @@ class BarDisplay {
     this.x = d3.scaleBand().rangeRound([0, width - margin.left - margin.right]);
     this.y = d3
       .scaleLinear()
+      .clamp(true)
       .rangeRound([0, height - margin.top - margin.bottom]);
     this.color = d3.scaleSequential(colorInterpolator);
 

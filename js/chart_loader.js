@@ -173,3 +173,9 @@ if ($("#bubble-sort-2-amount")[0]) {
   });
 }
 // /Bubble Sort 2 demonstration
+
+// Rocket Progress bar
+
+let rocketProgressBar = new RocketProgressBar("#rocket-progress-bar-display");
+
+// /Rocket Progress bar
