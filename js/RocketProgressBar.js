@@ -220,7 +220,16 @@ class RocketProgressBar {
       .append("path")
       .attr(
         "d",
-        "m 10 0 v 10 c 0 14 -8 7 -5 4 c -6 1 -5 9 0 9 c 1 0 3 1 7 -3 c 4 4 6 3 7 3 c 5 0 6 -8 0 -9 c 3 3 -5 10 -5 -4 v -10 z "
+        `M10 0
+        V10
+        C0 14 -8 7 -5 4
+        C-6 1 -5 9 0 9
+        C1 0 3 1 7 -3
+        C4 4 6 3 7 3
+        C5 0 6 -8 0 -9
+        C3 3 -5 10 -5 -4
+        V-10
+        Z`
       )
       .attr("opacity", "0.9")
       .style("mix-blend-mode", "multiply")
@@ -258,11 +267,11 @@ class RocketProgressBar {
     let scale = 1.5;
     this.createSmoke(smoke.attr("transform", "translate(3,10)"), scale);
 
-    smoke = this.smokes.append("g").attr("class", "rocket-smoke");
+    smoke = this.smokes.append("g").attr("class", "smoke");
     scale = 2;
     this.createSmoke(smoke.attr("transform", "translate(15,0)"), scale);
 
-    smoke = this.smokes.append("g").attr("class", "rocket-smoke");
+    smoke = this.smokes.append("g").attr("class", "smoke");
     scale = 1.8;
     this.createSmoke(smoke.attr("transform", "translate(-15,3)"), scale);
 
