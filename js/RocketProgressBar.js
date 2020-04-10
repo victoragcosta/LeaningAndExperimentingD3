@@ -289,9 +289,11 @@ class RocketProgressBar {
   }
 
   render(duration = 2000) {
+    // Create a new transition to synchronize everything
     const y = this.y;
     const t = this.svg.transition().duration(duration).ease(d3.easeBack);
 
+    // Recalculate and ajust ticks
     let min = d3.min([y.domain()[0], this._data]);
     let max = d3.max([y.domain()[1], this._data]);
     let yAxisGen = this.axisGenerator(
@@ -301,10 +303,12 @@ class RocketProgressBar {
     );
     this.yAxis.call(yAxisGen);
 
+    // Move rocket to correct height
     this.rocket
       .transition(t)
       .attr("transform", `translate(0,${y(this._data)})`);
 
+    // Adjust smoke length to match rocket position
     let data = this._data;
     let oldData = this._oldData;
     let oldHeight = +this.smokes.select("rect").attr("height");
@@ -319,15 +323,17 @@ class RocketProgressBar {
         };
       });
 
+    // Adjust size of the smoke end when too close to the ground
     this.smokes.transition(t).attrTween("transform", function () {
       return function (t) {
         return `scale(${d3.min([
           1,
-          d3.max([0, 10 * ((data - oldData) * t + oldData)]),
+          d3.max([0, (1 / 0.2) * ((data - oldData) * t + oldData)]),
         ])})`;
       };
     });
 
+    // Move the scale in case the rocket extrapolates the domain
     if (this._data > y.domain()[1] || this._data < y.domain()[0]) {
       this.chart
         .transition(t)
