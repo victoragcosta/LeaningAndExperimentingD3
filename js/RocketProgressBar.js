@@ -220,16 +220,7 @@ class RocketProgressBar {
       .append("path")
       .attr(
         "d",
-        `M10 0
-        V10
-        C0 14 -8 7 -5 4
-        C-6 1 -5 9 0 9
-        C1 0 3 1 7 -3
-        C4 4 6 3 7 3
-        C5 0 6 -8 0 -9
-        C3 3 -5 10 -5 -4
-        V-10
-        Z`
+        "m 10 0 v 10 c 0 14 -8 7 -5 4 c -6 1 -5 9 0 9 c 1 0 3 1 7 -3 c 4 4 6 3 7 3 c 5 0 6 -8 0 -9 c 3 3 -5 10 -5 -4 v -10 z "
       )
       .attr("opacity", "0.9")
       .style("mix-blend-mode", "multiply")

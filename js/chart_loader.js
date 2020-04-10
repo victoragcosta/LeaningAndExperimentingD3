@@ -179,8 +179,7 @@ let rocketProgressBar = new RocketProgressBar("#rocket-progress-bar-display");
 if ($("#rocket-progress-bar-amount")[0]) {
   $("#rocket-progress-bar-amount").on("input", function () {
     let quantity = +$(this).prop("value");
-    rocketProgressBar._data = quantity / 100.0;
-    rocketProgressBar.render(0);
+    rocketProgressBar.setData(quantity / 100.0, 0);
   });
 }
 if (
