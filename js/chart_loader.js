@@ -175,7 +175,21 @@ if ($("#bubble-sort-2-amount")[0]) {
 // /Bubble Sort 2 demonstration
 
 // Rocket Progress bar
-
 let rocketProgressBar = new RocketProgressBar("#rocket-progress-bar-display");
-
+if ($("#rocket-progress-bar-amount")[0]) {
+  $("#rocket-progress-bar-amount").on("input", function () {
+    let quantity = +$(this).prop("value");
+    rocketProgressBar._data = quantity / 100.0;
+    rocketProgressBar.render(0);
+  });
+}
+if (
+  $("#rocket-progress-bar-number-input")[0] &&
+  $("#rocket-progress-bar-play")[0]
+) {
+  $("#rocket-progress-bar-play").on("click", function () {
+    let quantity = +$("#rocket-progress-bar-number-input").prop("value");
+    rocketProgressBar.data = quantity / 100.0;
+  });
+}
 // /Rocket Progress bar

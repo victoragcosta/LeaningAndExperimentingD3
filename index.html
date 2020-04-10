@@ -111,7 +111,9 @@
             <button class="btn btn-primary" id="bubble-sort-play">
               Play
             </button>
-            <span id="bubble-sort-amount-display" class="mx-2">15</span>
+            <span id="bubble-sort-amount-display" class="mx-2 amount-display"
+              >15</span
+            >
             <input
               type="range"
               class="custom-range w-sm-50 w-xl-25"
@@ -139,7 +141,9 @@
             <button class="btn btn-primary" id="bubble-sort-2-play">
               Play
             </button>
-            <span id="bubble-sort-2-amount-display" class="mx-2">15</span>
+            <span id="bubble-sort-2-amount-display" class="mx-2 amount-display"
+              >15</span
+            >
             <input
               type="range"
               class="custom-range w-sm-50 w-xl-25"
@@ -163,24 +167,58 @@
           <h4 id="rocket-progress-bar" class="card-title">
             Rocket Progress Bar
           </h4>
-          <div class="w-100">
-            <button class="btn btn-primary" id="rocket-progress-bar-play">
-              Play
-            </button>
-            <span id="rocket-progress-bar-amount-display" class="mx-2">0</span>
-            <input
-              type="range"
-              class="custom-range w-sm-50 w-xl-25"
-              id="rocket-progress-bar-amount"
-              name="amount"
-              max="100"
-              min="0"
-              value="0"
-              data-toggle="range"
-              data-target="#rocket-progress-bar-amount-display"
-            />
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div id="rocket-progress-bar-display"></div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-6">
+                  <input
+                    type="range"
+                    class="custom-range"
+                    id="rocket-progress-bar-amount"
+                    name="amount"
+                    max="100"
+                    min="0"
+                    value="0"
+                    data-toggle="range"
+                    data-target="#rocket-progress-bar-amount-display"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <p
+                    id="rocket-progress-bar-amount-display"
+                    class="amount-display px-3"
+                  >
+                    0
+                  </p>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-6 mb-2">
+                  <input
+                    type="number"
+                    class="form-control w-100"
+                    id="rocket-progress-bar-number-input"
+                    value="0"
+                    min="0"
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <button
+                    class="btn btn-primary w-100"
+                    id="rocket-progress-bar-play"
+                  >
+                    Play
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
           </div>
-          <div id="rocket-progress-bar-display"></div>
         </div>
       </div>
       <br />

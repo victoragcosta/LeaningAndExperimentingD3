@@ -6,12 +6,9 @@ svg {
   margin: 0 auto;
 }
 
-*[onclick="showBubbleSort()"] {
-  cursor: pointer;
-}
-
-*[onclick="showBubbleSort()"]:disabled {
-  cursor: not-allowed;
+.amount-display {
+  white-space: pre;
+  text-align: right;
 }
 
 h4::before,

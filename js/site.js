@@ -23,13 +23,18 @@ $(document).ready(resizer);
 // /Deal with resizing of the screen
 
 // Deal with ranges
+function updateAmount() {
+  let self = $(this);
+  let target = $(self.attr("data-target"));
+  if (target[0]) {
+    let chars = +self.prop("max").length;
+    let value = +self.prop("value");
+    let formatter = d3.format(`> ${chars + 1}~`);
+    target.text(formatter(value));
+  }
+}
 if ($('input[data-toggle="range"]')[0]) {
-  $('input[data-toggle="range"]').on("input", function () {
-    let self = $(this);
-    let target = $(self.attr("data-target"));
-    if (target[0]) {
-      target.text(self.prop("value"));
-    }
-  });
+  $('input[data-toggle="range"]').each(updateAmount);
+  $('input[data-toggle="range"]').on("input", updateAmount);
 }
 // /Deal with ranges
