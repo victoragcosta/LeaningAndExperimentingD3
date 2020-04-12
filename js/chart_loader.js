@@ -191,4 +191,32 @@ if (
     rocketProgressBar.data = quantity / 100.0;
   });
 }
+// setInterval(() => {
+//   rocketProgressBar.data = 1;
+//   setTimeout(() => {
+//     rocketProgressBar.data = 0;
+//   }, 2500);
+// }, 5000);
 // /Rocket Progress bar
+
+// Poem Animation
+
+/* No meio do caminho tinha uma pedra
+Tinha uma pedra no meio do caminho
+Tinha uma pedra
+No meio do caminho tinha uma pedra
+
+Nunca me esquecerei desse acontecimento
+Na vida de minhas retinas tão fatigadas
+Nunca me esquecerei que no meio do caminho
+Tinha uma pedra
+Tinha uma pedra no meio do caminho
+No meio do caminho tinha uma pedra */
+// async function showPoemAnimation(chart) {
+//   chart.data = [{value}];
+//   delay(1000);
+//   chart.data = [];
+//   delay(1000);
+// }
+
+// /Poem Animation
