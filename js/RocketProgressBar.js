@@ -295,7 +295,6 @@ class RocketProgressBar {
     this.rocketWidth = bBox.width;
     this.rocketHeight = bBox.height;
     // Center rocket
-    console.log(this.rocketHeight, this.rocketWidth);
     this.rocket
       .select("g")
       .attr(

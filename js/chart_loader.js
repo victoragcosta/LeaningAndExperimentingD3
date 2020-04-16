@@ -212,11 +212,38 @@ Nunca me esquecerei que no meio do caminho
 Tinha uma pedra
 Tinha uma pedra no meio do caminho
 No meio do caminho tinha uma pedra */
-// async function showPoemAnimation(chart) {
-//   chart.data = [{value}];
-//   delay(1000);
-//   chart.data = [];
-//   delay(1000);
-// }
-
+async function showPoemAnimation(chart) {
+  let interval = 3000;
+  let terms = [
+    { value: "no meio do caminho ", color: "blue" },
+    { value: "tinha uma pedra ", color: "orange" },
+    { value: "nunca me esquecerei ", color: "green" },
+    { value: "desse acontecimento ", color: "red" },
+    { value: "na vida de minhas retinas tão fatigadas ", color: "purple" },
+    { value: "que ", color: "brown" },
+  ];
+  chart.data = [terms[0], terms[1]];
+  await delay(interval);
+  chart.data = [terms[1], terms[0]];
+  await delay(interval);
+  chart.data = [terms[1]];
+  await delay(interval);
+  chart.data = [terms[0], terms[1]];
+  await delay(interval);
+  chart.data = [terms[2], terms[3]];
+  await delay(interval);
+  chart.data = [terms[4]];
+  await delay(interval);
+  chart.data = [terms[2], terms[5], terms[0]];
+  await delay(interval);
+  chart.data = [terms[1]];
+  await delay(interval);
+  chart.data = [terms[1], terms[0]];
+  await delay(interval);
+  chart.data = [terms[0], terms[1]];
+  await delay(interval);
+}
+let poem = new ParagraphDisplay("#poem-display");
+setInterval(() => showPoemAnimation(poem), 30000);
+showPoemAnimation(poem);
 // /Poem Animation
