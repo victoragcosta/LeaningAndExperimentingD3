@@ -1,3 +1,3 @@
-# Playing With D3
+# Learning and Experimenting D3
 
-Just playing with some animations in D3
+Just improving my skills creating some charts with [D3](https://d3js.org/).
